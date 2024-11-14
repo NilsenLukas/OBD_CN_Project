@@ -5,6 +5,7 @@ const socketIo = require('socket.io');
 const app = express();
 const server = http.createServer(app);
 const io = socketIo(server);
+// const port = process.env.PORT || 3232;
 
 app.use(express.json());
 
@@ -24,5 +25,5 @@ app.get('/', (req, res) => {
 });
 
 server.listen(3232, () => {
-    console.log('Server running on port 3232');
+    console.log('Server running on port:' + `${port}`);
 });
