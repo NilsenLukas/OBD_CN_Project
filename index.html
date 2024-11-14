@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>CAN Bus Data Display</title>
+    <script src="/socket.io/socket.io.js"></script>
+  </head>
+  <body>
+    <h1>CAN Bus Data</h1>
+    <div id="dataDisplay"></div>
+
+    <script>
+      const socket = io();
+
+      socket.on("can_data", (data) => {
+        document.getElementById("dataDisplay").innerText = JSON.stringify(
+          data,
+          null,
+          2
+        );
+      });
+    </script>
+  </body>
+</html>
