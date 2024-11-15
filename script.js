@@ -6,6 +6,9 @@
 
 // Function to fetch data from the Raspberry Pi server
 async function fetchData() {
+    document.getElementById(
+        "dataDisplay"
+        ).innerText = `Loading...`;
     try {
         // Fetch data from the server
         const response = await fetch("http://172.18.23.28:5000/get_data");
@@ -33,6 +36,3 @@ async function fetchData() {
     }
 }
 
-
-// Fetch data immediately on page load
-fetchData();
