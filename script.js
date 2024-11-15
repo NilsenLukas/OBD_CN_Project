@@ -46,7 +46,7 @@ function registerPage() {
                 <input type="password" placeholder="Enter New Password" required>
             </div>
             <br>
-            <input id="submitBtn" type="submit" value="Submit"">
+            <input type="submit" value="Submit"">
             <button id="backBtn" type="button" onclick="loginPage()">Back</button>
         </form>
     </div>
@@ -60,9 +60,8 @@ function loginPage() {
       <h1>Enter Password</h1>
       <form onsubmit="passCheck(event)" method="get" id="loginForm">
         <input type="password" placeholder="Enter Password" required><br><br>
-        <div class="btns">
-            <input id="submitBtn" type="submit" value="Submit">
-            <button id="registBtn" type="button" onclick="registerPage()">Register</button>
+        <input type="submit" value="Submit">
+        <button id="registBtn" type="button" onclick="registerPage()">Register</button>
       </form>
     </div>
     `;

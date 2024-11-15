@@ -4,7 +4,7 @@ body {
 #inputForm {
     line-height: 2;
 }
-#submitBtn {
+#testBtn, input[type="submit"] {
     background-color: limegreen;
     color: white;
 }
@@ -27,4 +27,8 @@ button, input[type="submit"] {
     padding-left: 20px;
     padding-right: 20px;
     border-radius: 25px;
+}
+#testBtn:hover, #registBtn:hover, #backBtn:hover, input[type="submit"]:hover {
+    background-color: white;
+    color: black;
 }
