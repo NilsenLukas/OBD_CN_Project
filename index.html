@@ -2,23 +2,50 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>CAN Bus Data Display</title>
-    <script src="/socket.io/socket.io.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CAN Bus Data</title>
   </head>
   <body>
     <h1>CAN Bus Data</h1>
-    <div id="dataDisplay"></div>
+    <div id="dataDisplay">Loading...</div>
 
     <script>
-      const socket = io();
+      // Function to fetch data from the Raspberry Pi server
+      async function fetchData() {
+        try {
+          // Replace <raspberry_pi_ip> with the actual IP address of your Raspberry Pi
+          const response = await fetch(
+            "http://<raspberry_pi_ip>:5000/get_data"
+          );
 
-      socket.on("can_data", (data) => {
-        document.getElementById("dataDisplay").innerText = JSON.stringify(
-          data,
-          null,
-          2
-        );
-      });
+          // Check if the response is OK (status 200)
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+
+          // Parse the JSON data
+          const data = await response.json();
+
+          // Display the data in the HTML
+          document.getElementById("dataDisplay").innerText = JSON.stringify(
+            data,
+            null,
+            2
+          );
+        } catch (error) {
+          // Handle errors and display them in the HTML
+          document.getElementById(
+            "dataDisplay"
+          ).innerText = `Error: ${error.message}`;
+          console.error(error);
+        }
+      }
+
+      // Fetch data every 5 seconds
+      setInterval(fetchData, 5000);
+
+      // Fetch data immediately on page load
+      fetchData();
     </script>
   </body>
 </html>
