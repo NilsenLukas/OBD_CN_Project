@@ -7,7 +7,7 @@
 async function fetchData() {
     document.getElementById(
         "dataDisplay"
-        ).innerText = `Loading...`;
+        ).innerText = `\nLoading...`;
     try {
         // Fetch data from the server
         const response = await fetch("http://172.18.23.28:5000/get_data");
@@ -21,7 +21,7 @@ async function fetchData() {
         const data = await response.json();
 
         // Display the data in the HTML
-        document.getElementById("dataDisplay").innerText = JSON.stringify(
+        document.getElementById("dataDisplay").innerText = "\n" + JSON.stringify(
         data,
         null,
         2
@@ -30,7 +30,7 @@ async function fetchData() {
         // Handle errors and display them in the HTML
         document.getElementById(
         "dataDisplay"
-        ).innerText = `Error: ${error.message}`;
+        ).innerText = `\nError: ${error.message}`;
         console.error(error);
     }
 }
