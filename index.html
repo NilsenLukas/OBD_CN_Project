@@ -14,9 +14,7 @@
       async function fetchData() {
         try {
           // Replace <raspberry_pi_ip> with the actual IP address of your Raspberry Pi
-          const response = await fetch(
-            "http://<raspberry_pi_ip>:5000/get_data"
-          );
+          const response = await fetch("http://172.18.23.28:5000/get_data");
 
           // Check if the response is OK (status 200)
           if (!response.ok) {
@@ -41,8 +39,8 @@
         }
       }
 
-      // Fetch data every 5 seconds
-      setInterval(fetchData, 5000);
+      // Fetch data every 20 seconds
+      setInterval(fetchData, 20000);
 
       // Fetch data immediately on page load
       fetchData();
