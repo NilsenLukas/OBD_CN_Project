@@ -3,7 +3,6 @@
 // async function login() {
 // async function create_account() {
 
-
 // Function to fetch data from the Raspberry Pi server
 async function fetchData() {
     document.getElementById(
@@ -34,5 +33,48 @@ async function fetchData() {
         ).innerText = `Error: ${error.message}`;
         console.error(error);
     }
+}
+
+function registerPage() {
+    const loginPage = document.querySelector("body");
+    loginPage.innerHTML = `
+    <div id="pinPassEnter">
+      <h1>Enter Pin</h1>
+        <form onsubmit="pinCheck(event)" method="get" id="pinPassForm">
+            <div id="inputForm">
+                <input type="password" placeholder="Enter Pin" required><br>
+                <input type="password" placeholder="Enter New Password" required>
+            </div>
+            <br>
+            <input id="submitBtn" type="submit" value="Submit"">
+            <button id="backBtn" type="button" onclick="loginPage()">Back</button>
+        </form>
+    </div>
+    `;
+}
+
+function loginPage() {
+    const loginPage = document.querySelector("body");
+    loginPage.innerHTML = `
+    <div id="loginStart">
+      <h1>Enter Password</h1>
+      <form onsubmit="passCheck(event)" method="get" id="loginForm">
+        <input type="password" placeholder="Enter Password" required><br><br>
+        <div class="btns">
+            <input id="submitBtn" type="submit" value="Submit">
+            <button id="registBtn" type="button" onclick="registerPage()">Register</button>
+      </form>
+    </div>
+    `;
+}
+
+function passCheck(event){
+    event.preventDefault();
+    console.log("passCheck");
+}
+
+function pinCheck(event){
+    event.preventDefault();
+    console.log("pinCheck");
 }
 
