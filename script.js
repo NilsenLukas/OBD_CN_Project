@@ -1,6 +1,8 @@
 // Existing fetchData function to retrieve data from the Raspberry Pi server
 async function fetchData() {
-    document.getElementById("dataDisplay").innerText = `Loading...`;
+    document.getElementById(
+        "dataDisplay"
+        ).innerText = `\nLoading...`;
     try {
         const response = await fetch("http://172.18.23.28:5000/get_data");
 
@@ -9,9 +11,14 @@ async function fetchData() {
         }
 
         const data = await response.json();
+
+        // Display the data in the HTML
         document.getElementById("dataDisplay").innerText = JSON.stringify(data, null, 2);
     } catch (error) {
-        document.getElementById("dataDisplay").innerText = `Error: ${error.message}`;
+        // Handle errors and display them in the HTML
+        document.getElementById(
+        "dataDisplay"
+        ).innerText = `\nError: ${error.message}`;
         console.error(error);
     }
 }
