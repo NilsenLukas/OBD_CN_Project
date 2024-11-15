@@ -4,46 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>CAN Bus Data</title>
+    <script src="script.js" defer></script>
   </head>
   <body>
     <h1>CAN Bus Data</h1>
     <div id="dataDisplay">Loading...</div>
-
-    <script>
-      // Function to fetch data from the Raspberry Pi server
-      async function fetchData() {
-        try {
-          // Replace <raspberry_pi_ip> with the actual IP address of your Raspberry Pi
-          const response = await fetch("http://172.18.23.28:5000/get_data");
-
-          // Check if the response is OK (status 200)
-          if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-          }
-
-          // Parse the JSON data
-          const data = await response.json();
-
-          // Display the data in the HTML
-          document.getElementById("dataDisplay").innerText = JSON.stringify(
-            data,
-            null,
-            2
-          );
-        } catch (error) {
-          // Handle errors and display them in the HTML
-          document.getElementById(
-            "dataDisplay"
-          ).innerText = `Error: ${error.message}`;
-          console.error(error);
-        }
-      }
-
-      // Fetch data every 20 seconds
-      setInterval(fetchData, 20000);
-
-      // Fetch data immediately on page load
-      fetchData();
-    </script>
   </body>
 </html>
