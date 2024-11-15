@@ -10,10 +10,11 @@
   <body>
     <div id="loginStart">
       <h1>Enter Password</h1>
-      <form onsubmit="passCheck(event)" method="get" id="loginForm">
-        <input type="password" placeholder="Enter Password" required><br><br>
-        <input type="submit" value="Submit">
-        <button id="registBtn" type="button" onclick="registerPage()">Register</button>
+      <form onsubmit="passCheck(event)" method="post" id="loginForm">
+        <input type="password" id="password" placeholder="Enter Password" required><br><br>
+        <div class="btns">
+            <input id="submitBtn" type="submit" value="Submit">
+            <button id="registBtn" type="button" onclick="registerPage()">Register</button>
       </form>
     </div>
   </body>

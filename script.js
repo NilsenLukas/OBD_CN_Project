@@ -1,49 +1,31 @@
-
-//need following functions
-// async function login() {
-// async function create_account() {
-
-// Function to fetch data from the Raspberry Pi server
+// Existing fetchData function to retrieve data from the Raspberry Pi server
 async function fetchData() {
-    document.getElementById(
-        "dataDisplay"
-        ).innerText = `Loading...`;
+    document.getElementById("dataDisplay").innerText = `Loading...`;
     try {
-        // Fetch data from the server
         const response = await fetch("http://172.18.23.28:5000/get_data");
 
-        // Check if the response is OK (status 200)
         if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+            throw new Error(`HTTP error! status: ${response.status}`);
         }
 
-        // Parse the JSON data
         const data = await response.json();
-
-        // Display the data in the HTML
-        document.getElementById("dataDisplay").innerText = JSON.stringify(
-        data,
-        null,
-        2
-        );
+        document.getElementById("dataDisplay").innerText = JSON.stringify(data, null, 2);
     } catch (error) {
-        // Handle errors and display them in the HTML
-        document.getElementById(
-        "dataDisplay"
-        ).innerText = `Error: ${error.message}`;
+        document.getElementById("dataDisplay").innerText = `Error: ${error.message}`;
         console.error(error);
     }
 }
 
+// Navigation function to redirect to registration page
 function registerPage() {
     const loginPage = document.querySelector("body");
     loginPage.innerHTML = `
     <div id="pinPassEnter">
       <h1>Enter Pin</h1>
-        <form onsubmit="pinCheck(event)" method="get" id="pinPassForm">
+        <form onsubmit="pinCheck(event)" method="post" id="pinPassForm">
             <div id="inputForm">
-                <input type="password" placeholder="Enter Pin" required><br>
-                <input type="password" placeholder="Enter New Password" required>
+                <input type="password" id="pin" placeholder="Enter Pin" required><br>
+                <input type="password" id="newPassword" placeholder="Enter New Password" required>
             </div>
             <br>
             <input type="submit" value="Submit"">
@@ -53,6 +35,7 @@ function registerPage() {
     `;
 }
 
+// Navigation function to return to the login page
 function loginPage() {
     const loginPage = document.querySelector("body");
     loginPage.innerHTML = `
@@ -67,13 +50,46 @@ function loginPage() {
     `;
 }
 
-function passCheck(event){
+// Function to check password input
+async function passCheck(event) {
     event.preventDefault();
-    console.log("passCheck");
+    const password = document.getElementById("password").value;
+
+    try {
+        const response = await fetch("http://172.18.23.28:5000/login", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ password }),
+        });
+
+        const result = await response.json();
+        alert(result.message); // Show response message
+    } catch (error) {
+        console.error("Error during login:", error);
+        alert("Error during login.");
+    }
 }
 
-function pinCheck(event){
+// Function to check PIN input during registration
+async function pinCheck(event) {
     event.preventDefault();
-    console.log("pinCheck");
-}
+    const pin = document.getElementById("pin").value;
+    const password = document.getElementById("newPassword").value;
 
+    try {
+        const response = await fetch("http://172.18.23.28:5000/create_account", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ pin, password }),
+        });
+
+        const result = await response.json();
+        alert(result.message); // Show response message
+        if (result.message === "Account created successfully") {
+            loginPage(); // Redirect to login page if successful
+        }
+    } catch (error) {
+        console.error("Error during account creation:", error);
+        alert("Error during account creation.");
+    }
+}
