@@ -5,12 +5,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>CAN Bus Data</title>
     <script src="script.js" defer></script>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css" />
   </head>
   <body>
     <h1>CAN Bus Data</h1>
-    <button id="testBtn" type="button" onclick="fetchData()">Test</button>
-    <br>
-    <div id="dataDisplay"></div>
+    <button id="testBtn" type="button" onclick="fetchData()">Get Data:</button>
+    <br />
+    <div id="dataDisplayContainer">
+      <h2>Vehicle Data</h2>
+      <table
+        id="dataDisplayTable"
+        style="border-collapse: collapse; width: 50%; text-align: left"
+      >
+        <thead>
+          <tr>
+            <th>Metric</th>
+            <th>Value</th>
+          </tr>
+        </thead>
+        <tbody id="dataDisplay">
+          <tr>
+            <td>RPM (Revolutions Per Minute)</td>
+            <td>-</td>
+          </tr>
+          <tr>
+            <td>Speed (km/h)</td>
+            <td>-</td>
+          </tr>
+          <tr>
+            <td>Coolant Temperature (°C)</td>
+            <td>-</td>
+          </tr>
+          <tr></tr>
+        </tbody>
+      </table>
+    </div>
   </body>
 </html>

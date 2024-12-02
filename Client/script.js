@@ -1,22 +1,57 @@
-// Existing fetchData function to retrieve data from the Raspberry Pi server
+// Define server IP and port
+const SERVER_IP = "172.18.20.158";
+const SERVER_PORT = "5000";
+
+// Fetch CAN data from the server
 async function fetchData() {
-    document.getElementById("dataDisplay").innerText = "Loading...";
+    const dataDisplay = document.getElementById("dataDisplay");
+    dataDisplay.innerHTML = ""; // Clear the table before updating
+
     try {
-        const response = await fetch("http://172.18.23.28:5000/get_data");
+        const response = await fetch(`http://${SERVER_IP}:${SERVER_PORT}/get_data`);
 
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
 
         const data = await response.json();
-        document.getElementById("dataDisplay").innerText = JSON.stringify(data, null, 2);
+
+        // Map keys to user-friendly labels
+        const formattedData = [
+            { label: "RPM (Revolutions Per Minute)", value: data.rpm || "No data" },
+            { label: "Speed (km/h)", value: data.speed || "No data" },
+            { label: "Coolant Temperature (°C)", value: data.temperature || "No data" }
+        ];
+
+        // Populate the table with formatted data
+        formattedData.forEach(item => {
+            const row = document.createElement("tr");
+
+            const labelCell = document.createElement("td");
+            labelCell.textContent = item.label;
+
+            const valueCell = document.createElement("td");
+            valueCell.textContent = item.value;
+
+            row.appendChild(labelCell);
+            row.appendChild(valueCell);
+
+            dataDisplay.appendChild(row);
+        });
     } catch (error) {
-        document.getElementById("dataDisplay").innerText = `Error: ${error.message}`;
+        const row = document.createElement("tr");
+        const errorCell = document.createElement("td");
+        errorCell.setAttribute("colspan", 2);
+        errorCell.textContent = `Error: ${error.message}`;
+        row.appendChild(errorCell);
+        dataDisplay.appendChild(row);
+
         console.error(error);
     }
 }
 
-// Navigation function to redirect to registration page
+
+// Navigation function to redirect to the registration page
 function registerPage() {
     const loginPage = document.querySelector("body");
     loginPage.innerHTML = `
@@ -28,7 +63,7 @@ function registerPage() {
                 <input type="password" id="newPassword" placeholder="Enter New Password" required>
             </div>
             <br>
-            <input type="submit" value="Submit">
+            <input id="submitBtn" type="submit" value="Submit">
             <button id="backBtn" type="button" onclick="loginPage()">Back</button>
         </form>
     </div>
@@ -46,7 +81,6 @@ function loginPage() {
         <div class="btns">
             <input id="submitBtn" type="submit" value="Submit">
             <button id="registBtn" type="button" onclick="registerPage()">Register</button>
-        </div>
       </form>
     </div>
     `;
@@ -58,13 +92,11 @@ async function passCheck(event) {
     const password = document.getElementById("password").value;
 
     try {
-        const response = await fetch("http://172.18.23.28:5000/login", {
+        const response = await fetch(`http://${SERVER_IP}:${SERVER_PORT}/login`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ password }),
         });
-
-        if (!response.ok) throw new Error("Server error during login.");
 
         const result = await response.json();
         alert(result.message); // Show response message
@@ -81,18 +113,16 @@ async function pinCheck(event) {
     const password = document.getElementById("newPassword").value;
 
     try {
-        const response = await fetch("http://172.18.23.28:5000/create_account", {
+        const response = await fetch(`http://${SERVER_IP}:${SERVER_PORT}/create_account`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ pin, password }),
         });
 
-        if (!response.ok) throw new Error("Server error during account creation.");
-
         const result = await response.json();
         alert(result.message); // Show response message
         if (result.message === "Account created successfully") {
-            window.location.href = 'index.html'; // Redirect to login page if successful
+            loginPage(); // Redirect to login page if successful
         }
     } catch (error) {
         console.error("Error during account creation:", error);

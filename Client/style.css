@@ -1,34 +1,85 @@
+/* Center everything on the page */
 body {
-    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* justify-content: center; */
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    margin: 0;
+    height: 100vh;
 }
-#inputForm {
-    line-height: 2;
+
+h1{
+    margin-top: 5rem;
 }
-#testBtn, input[type="submit"] {
-    background-color: limegreen;
+
+/* Style for the table container */
+#dataDisplayContainer {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 60%;
+    max-width: 800px;
+}
+
+/* Style the table */
+#dataDisplayTable {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    margin: 0 auto;
+}
+
+/* Table header style */
+#dataDisplayTable th {
+    background-color: #4CAF50;
     color: white;
+    padding: 12px;
+    font-size: 16px;
+    border-radius: 15px 15px 0 0;
 }
-#registBtn {
-    background-color: orange;
-    color: white;
+
+/* Table rows and data cells */
+#dataDisplayTable td {
+    padding: 12px;
+    border: 1px solid #ddd;
+    font-size: 14px;
 }
-#backBtn {
-    background-color: red;
-    color: white;
+
+/* Alternate row colors */
+#dataDisplayTable tr:nth-child(even) {
+    background-color: #f2f2f2;
 }
-input[type="password"] {
-    border-radius: 10px;
-    padding: 2px;
-    padding-left: 10px;
-    padding-right: 10px;
+
+#dataDisplayTable tr:nth-child(odd) {
+    background-color: #ffffff;
 }
+
+/* Hover effect on table rows */
+#dataDisplayTable tr:hover {
+    background-color: #ddd;
+}
+
+/* Button styles for test and actions */
 button, input[type="submit"] {
-    padding: 5px;
-    padding-left: 20px;
-    padding-right: 20px;
+    margin: 10px;
+    padding: 10px 20px;
+    border: none;
     border-radius: 25px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: 0.3s;
 }
-#testBtn:hover, #registBtn:hover, #backBtn:hover, input[type="submit"]:hover {
-    background-color: white;
-    color: black;
+
+#testBtn {
+    background-color: #4CAF50;
+    color: white;
+}
+
+#testBtn:hover {
+    background-color: #45a049;
+    color: #fff;
 }
