@@ -62,8 +62,10 @@ function registerPage() {
                 <input type="password" id="newPassword" placeholder="Enter New Password" required>
             </div>
             <br>
-            <input id="submitBtn" type="submit" value="Submit">
-            <button id="backBtn" type="button" onclick="loginPage()">Back</button>
+            <div class="btns">
+                <input id="submitBtn" type="submit" value="Submit">
+                <button id="backBtn" type="button" onclick="loginPage()">Back</button>
+            </div>
         </form>
     </div>
     `;
