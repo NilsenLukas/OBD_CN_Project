@@ -1,11 +1,10 @@
-// Define server IP and port
 const SERVER_IP = "172.18.20.158";
 const SERVER_PORT = "5000";
 
 // Fetch CAN data from the server
 async function fetchData() {
     const dataDisplay = document.getElementById("dataDisplay");
-    dataDisplay.innerHTML = ""; // Clear the table before updating
+    dataDisplay.innerHTML = "";
 
     try {
         const response = await fetch(`http://${SERVER_IP}:${SERVER_PORT}/get_data`);
@@ -22,7 +21,7 @@ async function fetchData() {
             { label: "Speed (km/h)", value: data.speed || "No data" },
             { label: "Coolant Temperature (°C)", value: data.temperature || "No data" }
         ];
-
+        // dataDisplay.innerHTML = "";
         // Populate the table with formatted data
         formattedData.forEach(item => {
             const row = document.createElement("tr");
@@ -99,7 +98,7 @@ async function passCheck(event) {
         });
 
         const result = await response.json();
-        alert(result.message); // Show response message
+        alert(result.message); 
     } catch (error) {
         console.error("Error during login:", error);
         alert("Error during login.");
@@ -120,9 +119,9 @@ async function pinCheck(event) {
         });
 
         const result = await response.json();
-        alert(result.message); // Show response message
+        alert(result.message); 
         if (result.message === "Account created successfully") {
-            loginPage(); // Redirect to login page if successful
+            loginPage(); 
         }
     } catch (error) {
         console.error("Error during account creation:", error);
