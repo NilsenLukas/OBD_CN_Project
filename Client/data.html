@@ -3,20 +3,20 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>CAN Bus Data</title>
-    <script src="script.js" defer></script>
+    <title>Vehicle Dashboard</title>
     <link rel="stylesheet" href="style.css" />
+    <script src="./js/fraction.min.js" defer></script>
+    <script src="./js/speedometer.js" defer></script>
+    <script src="./js/script.js" defer></script>
   </head>
   <body>
-    <h1>CAN Bus Data</h1>
-    <button id="testBtn" type="button" onclick="fetchData()">Get Data:</button>
+    <h1>Vehicle Dashboard</h1>
+    <button id="testBtn" type="button" onclick="fetchData()">Get Data</button>
     <br />
+
     <div id="dataDisplayContainer">
       <h2>Vehicle Data</h2>
-      <table
-        id="dataDisplayTable"
-        style="border-collapse: collapse; width: 50%; text-align: left"
-      >
+      <table id="dataDisplayTable">
         <thead>
           <tr>
             <th>Metric</th>
@@ -42,6 +42,15 @@
           </tr>
         </tbody>
       </table>
+
+      <br />
+
+      <div id="speedometerContainer">
+        <div style="display: none">
+          <img id="sprite" src="assets/icons.svg" />
+        </div>
+        <canvas id="canvas" width="850" height="420"></canvas>
+      </div>
     </div>
   </body>
 </html>

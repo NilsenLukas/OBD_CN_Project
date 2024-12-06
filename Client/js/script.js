@@ -1,16 +1,20 @@
 const SERVER_IP = "172.18.20.158";
 const SERVER_PORT = "5000";
 
-// Fetch CAN data from the server
+// Fetch CAN data from the server and update the dashboard
 async function fetchData() {
     try {
         const response = await fetch(`http://${SERVER_IP}:${SERVER_PORT}/get_data`);
-
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
+        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
 
         const data = await response.json();
+
+        // const data = {
+        //     rpm: 200,
+        //     speed: 20,
+        //     temperature: 90,
+        //     fuel: 25
+        // };
 
         // Map keys to user-friendly labels and corresponding table rows
         const dataMapping = {
@@ -25,15 +29,31 @@ async function fetchData() {
             const row = document.querySelector(
                 `tr[data-label="${label}"] td:last-child`
             );
-            if (row) {
-                row.textContent = data[key] !== null ? data[key] : "No data";
-            }
+            if (row) row.textContent = data[key] !== null ? data[key] : "No data";
         }
+
+        // Normalize and update the speedometer with data
+        const speedValue = (data.speed || 0) / 200; 
+        const rpmValue = (data.rpm || 0) / 800; 
+        const fuelValue = (data.fuel || 0) / 100; 
+        // const turnSignals = { left: false, right: false };
+        
+        draw(speedValue, rpmValue, fuelValue, 0, turnSignals, icons);
     } catch (error) {
         console.error("Error fetching data:", error);
         alert("Failed to fetch data from the server.");
     }
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+    // Define turnSignals variable as required by the draw function
+    const turnSignals = { left: false, right: false }; 
+    const icons = document.getElementById("sprite"); 
+
+    console.log("Initializing speedometer...");
+    draw(0, 0, 0, 0, turnSignals, icons); // Initial render with zero values
+});
+
 
 // Navigation function to redirect to the registration page
 function registerPage() {
