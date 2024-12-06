@@ -3,9 +3,6 @@ const SERVER_PORT = "5000";
 
 // Fetch CAN data from the server
 async function fetchData() {
-    const dataDisplay = document.getElementById("dataDisplay");
-    dataDisplay.innerHTML = "";
-
     try {
         const response = await fetch(`http://${SERVER_IP}:${SERVER_PORT}/get_data`);
 
@@ -15,40 +12,28 @@ async function fetchData() {
 
         const data = await response.json();
 
-        // Map keys to user-friendly labels
-        const formattedData = [
-            { label: "RPM (Revolutions Per Minute)", value: data.rpm || "No data" },
-            { label: "Speed (km/h)", value: data.speed || "No data" },
-            { label: "Coolant Temperature (°C)", value: data.temperature || "No data" }
-        ];
-        // dataDisplay.innerHTML = "";
-        // Populate the table with formatted data
-        formattedData.forEach(item => {
-            const row = document.createElement("tr");
+        // Map keys to user-friendly labels and corresponding table rows
+        const dataMapping = {
+            rpm: "RPM (Revolutions Per Minute)",
+            speed: "Speed (km/h)",
+            temperature: "Coolant Temperature (°C)",
+            fuel: "Fuel Level (%)"
+        };
 
-            const labelCell = document.createElement("td");
-            labelCell.textContent = item.label;
-
-            const valueCell = document.createElement("td");
-            valueCell.textContent = item.value;
-
-            row.appendChild(labelCell);
-            row.appendChild(valueCell);
-
-            dataDisplay.appendChild(row);
-        });
+        // Update the second column of the table with the new values
+        for (const [key, label] of Object.entries(dataMapping)) {
+            const row = document.querySelector(
+                `tr[data-label="${label}"] td:last-child`
+            );
+            if (row) {
+                row.textContent = data[key] !== null ? data[key] : "No data";
+            }
+        }
     } catch (error) {
-        const row = document.createElement("tr");
-        const errorCell = document.createElement("td");
-        errorCell.setAttribute("colspan", 2);
-        errorCell.textContent = `Error: ${error.message}`;
-        row.appendChild(errorCell);
-        dataDisplay.appendChild(row);
-
-        console.error(error);
+        console.error("Error fetching data:", error);
+        alert("Failed to fetch data from the server.");
     }
 }
-
 
 // Navigation function to redirect to the registration page
 function registerPage() {
