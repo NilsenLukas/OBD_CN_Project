@@ -34,7 +34,7 @@ async function fetchData() {
 
         // Normalize and update the speedometer with data
         const speedValue = (data.speed || 0) / 200; 
-        const rpmValue = (data.rpm || 0) / 800; 
+        const rpmValue = (data.rpm || 0) / 8000; 
         const fuelValue = (data.fuel || 0) / 100; 
         // const turnSignals = { left: false, right: false };
         
